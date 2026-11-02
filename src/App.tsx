@@ -222,14 +222,24 @@ export default function App() {
           transition={{ duration: 0.7 }}
         >
           <div className="author-layout">
-            <img
-              className="author-portrait"
-              src={author.portraitSrc}
-              alt={`Portrait of ${author.name}`}
-              width={640}
-              height={640}
-              loading="lazy"
-            />
+            <picture>
+              <source
+                type="image/webp"
+                srcSet={author.portraitWebpSrc}
+                sizes={author.portraitSizes}
+              />
+              <img
+                className="author-portrait"
+                src={author.portraitSrc}
+                srcSet={author.portraitSrcSet}
+                sizes={author.portraitSizes}
+                alt={`Portrait of ${author.name}`}
+                width={author.portraitWidth}
+                height={author.portraitHeight}
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
             <div className="author-copy">
               <p className="eyebrow">About the author</p>
               <h2 id="author-heading">{author.name}</h2>

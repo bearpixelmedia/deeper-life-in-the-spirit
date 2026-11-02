@@ -358,12 +358,16 @@
 }
 
 .author-portrait {
+  display: block;
   width: 100%;
-  max-width: 22rem;
+  max-width: min(22rem, 100%);
+  height: auto;
   aspect-ratio: 1;
   object-fit: cover;
+  object-position: center top;
   border-radius: 2px;
   box-shadow: 0 20px 48px rgba(0, 0, 0, 0.35);
+  background: rgba(183, 208, 200, 0.08);
 }
 
 .author-copy .prose {
