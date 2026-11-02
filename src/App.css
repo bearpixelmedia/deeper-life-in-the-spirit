@@ -7,10 +7,13 @@
   --space-lg: 1.75rem;
   --space-xl: clamp(2.5rem, 6vw, 5rem);
   --space-section: clamp(2.75rem, 7vw, 5.5rem);
+  --header-offset: 4.5rem;
   position: relative;
   isolation: isolate;
   overflow-x: clip;
   min-height: 100vh;
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
 }
 
 .shell {
@@ -111,6 +114,7 @@
   backdrop-filter: blur(14px);
   background: rgba(6, 19, 18, 0.55);
   border-bottom: 1px solid rgba(183, 208, 200, 0.08);
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 .site-header-inner {
@@ -266,6 +270,7 @@
 
 .section {
   padding-block: var(--space-section);
+  scroll-margin-top: calc(var(--header-offset) + env(safe-area-inset-top, 0px));
 }
 
 .eyebrow {
@@ -539,8 +544,12 @@
   }
 }
 
-/* Phones / small tablets: stack hero, keep left edge aligned */
+/* Phones / small tablets: stack hero, center cover for balance */
 @media (max-width: 720px) {
+  .page {
+    --header-offset: 4.1rem;
+  }
+
   .hero {
     grid-template-columns: 1fr;
     min-height: auto;
@@ -552,11 +561,11 @@
   .hero-visual {
     order: -1;
     min-height: auto;
-    justify-content: flex-start;
+    justify-content: center;
   }
 
   .cover-stage {
-    width: min(52vw, 240px);
+    width: min(58vw, 250px);
   }
 
   .hero-brand {
@@ -584,12 +593,14 @@
 
   .author-portrait {
     max-width: 14rem;
+    margin-inline: auto;
   }
 
   .buy-covers {
     min-height: 16rem;
     order: -1;
     margin-bottom: 0.5rem;
+    justify-content: center;
   }
 
   .buy-cover {
@@ -604,12 +615,18 @@
   .theme-list {
     margin-top: 1.5rem;
   }
+
+  .cta,
+  .cta--compact {
+    min-height: 44px;
+  }
 }
 
 @media (max-width: 560px) {
   .page {
     --gutter: 1rem;
     --space-section: 2.5rem;
+    --header-offset: 3.9rem;
   }
 
   .site-header-inner {
@@ -628,7 +645,7 @@
   }
 
   .cover-stage {
-    width: min(46vw, 176px);
+    width: min(52vw, 200px);
   }
 
   .hero {
@@ -653,6 +670,7 @@
 
   .hero-actions {
     gap: 0.75rem 1rem;
+    flex-wrap: wrap;
   }
 
   .cta {
@@ -685,7 +703,7 @@
 /* Very short phones: keep primary CTA in first viewport */
 @media (max-width: 400px) and (max-height: 720px) {
   .cover-stage {
-    width: min(40vw, 148px);
+    width: min(44vw, 168px);
   }
 
   .hero {
