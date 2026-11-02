@@ -1,0 +1,252 @@
+import { motion, useReducedMotion } from "framer-motion";
+import { AMAZON_URL, author, book } from "./data";
+import "./App.css";
+
+function AmazonButton({
+  className = "",
+  label = "Buy on Amazon",
+}: {
+  className?: string;
+  label?: string;
+}) {
+  return (
+    <a
+      className={`cta ${className}`.trim()}
+      href={AMAZON_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span>{label}</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="cta-arrow">
+        <path
+          d="M5 12h12m0 0-5-5m5 5-5 5"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </a>
+  );
+}
+
+export default function App() {
+  const reduceMotion = useReducedMotion();
+  const fadeUp = reduceMotion
+    ? { hidden: { opacity: 1, y: 0 }, show: { opacity: 1, y: 0 } }
+    : { hidden: { opacity: 0, y: 28 }, show: { opacity: 1, y: 0 } };
+
+  return (
+    <div className="page">
+      <div className="atmosphere" aria-hidden="true">
+        <div className="atmosphere-glow atmosphere-glow--dawn" />
+        <div className="atmosphere-glow atmosphere-glow--valley" />
+        <div className="atmosphere-rays" />
+        <div className="atmosphere-grain" />
+      </div>
+
+      <header className="site-header">
+        <a className="wordmark" href="#top">
+          Deeper Life in the Spirit
+        </a>
+        <AmazonButton className="cta--compact" label="Get the book" />
+      </header>
+
+      <main id="top">
+        <section className="hero" aria-labelledby="hero-title">
+          <div className="hero-copy">
+            <motion.p
+              className="hero-brand"
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {book.title}
+            </motion.p>
+            <motion.h1
+              id="hero-title"
+              initial={reduceMotion ? false : { opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+            >
+              A year in Scripture. A life formed by the Spirit.
+            </motion.h1>
+            <motion.p
+              className="hero-support"
+              initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
+            >
+              Pastor Dr. Daniel Page’s 365-day journey from Genesis to Revelation—
+              for readers longing to know God more intimately through His Word.
+            </motion.p>
+            <motion.div
+              className="hero-actions"
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <AmazonButton />
+              <a className="text-link" href="#about">
+                About the book
+              </a>
+            </motion.div>
+          </div>
+
+          <motion.div
+            className="hero-visual"
+            initial={reduceMotion ? false : { opacity: 0, y: 36, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="cover-stage">
+              <motion.img
+                className="cover"
+                src={book.coverSrc}
+                alt={`Cover of ${book.title} by ${book.author}`}
+                width={1000}
+                height={1499}
+                animate={
+                  reduceMotion
+                    ? undefined
+                    : { y: [0, -10, 0] }
+                }
+                transition={
+                  reduceMotion
+                    ? undefined
+                    : { duration: 7, repeat: Infinity, ease: "easeInOut" }
+                }
+              />
+              <div className="cover-glow" aria-hidden="true" />
+            </div>
+          </motion.div>
+        </section>
+
+        <motion.section
+          id="about"
+          className="section about"
+          aria-labelledby="about-heading"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.25 }}
+          variants={fadeUp}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <p className="eyebrow">About the book</p>
+          <h2 id="about-heading">Scripture’s story, day by day</h2>
+          <div className="prose">
+            {book.description.map((paragraph) => (
+              <p key={paragraph.slice(0, 32)}>{paragraph}</p>
+            ))}
+          </div>
+        </motion.section>
+
+        <section className="section themes" aria-labelledby="themes-heading">
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeUp}
+            transition={{ duration: 0.7 }}
+          >
+            <p className="eyebrow">Along the way</p>
+            <h2 id="themes-heading">What this year invites</h2>
+            <p className="section-lead">
+              Drawn from the Amazon listing—themes of the journey, not a made-up table of contents.
+            </p>
+          </motion.div>
+          <div className="theme-list">
+            {book.themes.map((theme, index) => (
+              <motion.article
+                key={theme.title}
+                className="theme-item"
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.4 }}
+                variants={fadeUp}
+                transition={{ duration: 0.65, delay: reduceMotion ? 0 : index * 0.08 }}
+              >
+                <span className="theme-index">{String(index + 1).padStart(2, "0")}</span>
+                <h3>{theme.title}</h3>
+                <p>{theme.body}</p>
+              </motion.article>
+            ))}
+          </div>
+        </section>
+
+        <motion.section
+          id="author"
+          className="section author"
+          aria-labelledby="author-heading"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.25 }}
+          variants={fadeUp}
+          transition={{ duration: 0.7 }}
+        >
+          <p className="eyebrow">About the author</p>
+          <h2 id="author-heading">{author.name}</h2>
+          <p className="author-role">{author.role}</p>
+          <div className="prose">
+            {author.paragraphs.map((paragraph) => (
+              <p key={paragraph.slice(0, 32)}>{paragraph}</p>
+            ))}
+          </div>
+          <p className="source-note">
+            Author details adapted from the public staff page at{" "}
+            <a href={author.sourceUrl} target="_blank" rel="noopener noreferrer">
+              {author.sourceLabel}
+            </a>
+            .
+          </p>
+        </motion.section>
+
+        <motion.section
+          id="buy"
+          className="section buy"
+          aria-labelledby="buy-heading"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeUp}
+          transition={{ duration: 0.7 }}
+        >
+          <p className="eyebrow">Get the book</p>
+          <h2 id="buy-heading">Begin the journey on Amazon</h2>
+          <p className="section-lead">
+            Paperback · {book.pages} pages · {book.publisher} · {book.publicationDate}
+          </p>
+          <dl className="meta-list">
+            <div>
+              <dt>ISBN-13</dt>
+              <dd>{book.isbn13}</dd>
+            </div>
+            <div>
+              <dt>ASIN</dt>
+              <dd>{book.asin}</dd>
+            </div>
+            <div>
+              <dt>Language</dt>
+              <dd>{book.language}</dd>
+            </div>
+          </dl>
+          <AmazonButton label="Buy Deeper Life in the Spirit" />
+        </motion.section>
+      </main>
+
+      <footer className="site-footer">
+        <p>
+          © {new Date().getFullYear()} {book.author}. {book.title}.
+        </p>
+        <p>
+          Cover and product details from the{" "}
+          <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer">
+            Amazon listing
+          </a>
+          .
+        </p>
+      </footer>
+    </div>
+  );
+}
