@@ -1,6 +1,9 @@
 name: Restore Amazon author portrait
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/restore-amazon-portrait.yml'
 jobs:
   restore:
     runs-on: ubuntu-latest
