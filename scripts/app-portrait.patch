@@ -1,0 +1,55 @@
+--- a/src/App.tsx
++++ b/src/App.tsx
+@@ -222,14 +222,24 @@
+           transition={{ duration: 0.7 }}
+         >
+           <div className="author-layout">
+-            <img
+-              className="author-portrait"
+-              src={author.portraitSrc}
+-              alt={`Portrait of ${author.name}`}
+-              width={640}
+-              height={640}
+-              loading="lazy"
+-            />
++            <picture>
++              <source
++                type="image/webp"
++                srcSet={author.portraitWebpSrc}
++                sizes={author.portraitSizes}
++              />
++              <img
++                className="author-portrait"
++                src={author.portraitSrc}
++                srcSet={author.portraitSrcSet}
++                sizes={author.portraitSizes}
++                alt={`Portrait of ${author.name}`}
++                width={author.portraitWidth}
++                height={author.portraitHeight}
++                loading="lazy"
++                decoding="async"
++              />
++            </picture>
+             <div className="author-copy">
+               <p className="eyebrow">About the author</p>
+               <h2 id="author-heading">{author.name}</h2>
+--- a/src/App.css
++++ b/src/App.css
+@@ -358,12 +358,16 @@
+ }
+ 
+ .author-portrait {
++  display: block;
+   width: 100%;
+-  max-width: 22rem;
++  max-width: min(22rem, 100%);
++  height: auto;
+   aspect-ratio: 1;
+   object-fit: cover;
++  object-position: center top;
+   border-radius: 2px;
+   box-shadow: 0 20px 48px rgba(0, 0, 0, 0.35);
++  background: rgba(183, 208, 200, 0.08);
+ }
+ 
+ .author-copy .prose {
