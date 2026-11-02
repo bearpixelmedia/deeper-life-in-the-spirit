@@ -56,7 +56,7 @@ export const book = {
 export const author = {
   name: "Dr. Daniel Page",
   role: "Senior Pastor, Crestview Baptist Church",
-  // User-provided high-res author portrait (1803\u00d71803 WebP).
+  // User-provided high-res author portrait (1803×1803 WebP).
   portraitSrc: "/images/author-portrait-1200.jpg",
   portraitSrcSet:
     "/images/author-portrait-640.jpg 640w, /images/author-portrait-1200.jpg 1200w, /images/author-portrait.jpg 1803w",
