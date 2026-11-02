@@ -56,19 +56,19 @@ export const book = {
 export const author = {
   name: "Dr. Daniel Page",
   role: "Senior Pastor, Crestview Baptist Church",
-  // Cropped from Crestview Baptist Church public staff photo
-  // https://crestviewcanton.com/mt-content/uploads/2020/02/dsc08249.jpg
-  portraitSrc: "/images/author-portrait.jpg",
+  // User-provided high-res author portrait (1803×1803 WebP).
+  portraitSrc: "/images/author-portrait-1200.jpg",
   portraitSrcSet:
-    "/images/author-portrait-640.jpg 640w, /images/author-portrait.jpg 871w",
+    "/images/author-portrait-640.jpg 640w, /images/author-portrait-1200.jpg 1200w, /images/author-portrait.jpg 1803w",
   portraitSizes: "(max-width: 720px) 14rem, 22rem",
-  portraitWidth: 871,
-  portraitHeight: 871,
+  portraitWidth: 1803,
+  portraitHeight: 1803,
   portraitWebpSrc: "/images/author-portrait.webp",
+  portraitWebpSrcSet: "/images/author-portrait.webp 1803w",
   paragraphs: [
     "Dr. Daniel Page is a pastor, preacher, musician, and teacher with a deep love for God's Word and a passion for communicating its timeless truth in ways that speak to today's world. A native of Cherryville, North Carolina, Dan came to faith in Christ at age ten under the ministry of his father, Ken Page, who was also his pastor.",
     "Since beginning church ministry in 1985, Dan has served in worship, youth, children's, and pastoral ministry, including local and international missions with his wife, Christine. Since 2009, he has served as Senior Pastor of Crestview Baptist Church in Canton, North Carolina. Dan and Christine have been married for 37 years and are blessed with 9 children and 15 grandchildren.",
   ],
-  sourceLabel: "Crestview Baptist Church staff photo (cropped)",
-  sourceUrl: "https://crestviewcanton.com/about-staff/",
+  sourceLabel: "Author-provided portrait",
+  sourceUrl: AMAZON_URL,
 };

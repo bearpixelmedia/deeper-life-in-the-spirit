@@ -1,0 +1,28 @@
+name: Materialize author portrait
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/portrait-b64/**'
+      - 'scripts/materialize-portrait.sh'
+      - '.github/workflows/materialize-portrait.yml'
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode portrait assets
+        run: bash scripts/materialize-portrait.sh
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/images/author-portrait.webp public/images/author-portrait-hires.webp public/images/author-portrait.jpg public/images/author-portrait-640.jpg public/images/author-portrait-1200.jpg
+          if git diff --staged --quiet; then
+            echo "No portrait changes"
+          else
+            git commit -m "Materialize user-provided author portrait binaries"
+            git push
+          fi
