@@ -1,1 +1,48 @@
-placeholder
+name: Restore Amazon author portrait
+on:
+  workflow_dispatch:
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Amazon portrait sidecars and binaries
+        run: |
+          set -euo pipefail
+          mkdir -p scripts/portrait-b64 public/images
+          curl -fsSL -o scripts/portrait-b64/author-portrait.webp.b64 "https://tmpfiles.org/dl/1793654227.206a0464ce47bebf/wbAwdixdoX3M/gh-webp-content.txt"
+          curl -fsSL -o scripts/portrait-b64/author-portrait.jpg.b64 "https://tmpfiles.org/dl/1793654227.4a78aebd04bcd742/wEAid0xqomGR/gh-jpg-content.txt"
+          curl -fsSL -o public/images/author-portrait.webp "https://tmpfiles.org/dl/1793654228.bd12ae9b792b3572/wUAUdgx5ov4Z/author-portrait.webp"
+          curl -fsSL -o public/images/author-portrait.jpg "https://tmpfiles.org/dl/1793654227.2b86505c75319207/wIABdvxeoYsm/author-portrait.jpg"
+          curl -fsSL -o public/images/author-portrait-320.jpg "https://tmpfiles.org/dl/1793654228.f465c1a37882394c/wdAHdWxLo6mP/author-portrait-320.jpg"
+          cp public/images/author-portrait.webp public/images/author-portrait-hires.webp
+          cp public/images/author-portrait.jpg public/images/author-portrait-640.jpg
+          cp public/images/author-portrait.jpg public/images/author-portrait-1200.jpg
+          rm -f scripts/portrait-b64/author-portrait.webp.b64.part* \
+                scripts/portrait-b64/author-portrait.jpg.b64.part* \
+                scripts/portrait-b64/author-portrait-1200.jpg.b64 \
+                scripts/portrait-b64/author-portrait-640.jpg.b64 \
+                scripts/portrait-b64/author-portrait-hires.webp.b64 || true
+          wc -c scripts/portrait-b64/author-portrait.webp.b64 \
+               scripts/portrait-b64/author-portrait.jpg.b64 \
+               public/images/author-portrait.jpg \
+               public/images/author-portrait.webp \
+               public/images/author-portrait-320.jpg
+          test "$(wc -c < scripts/portrait-b64/author-portrait.webp.b64)" -eq 26908
+          test "$(wc -c < scripts/portrait-b64/author-portrait.jpg.b64)" -eq 50456
+          test "$(wc -c < public/images/author-portrait.jpg)" -eq 37841
+          test "$(wc -c < public/images/author-portrait.webp)" -eq 20180
+      - name: Commit restored Amazon portrait
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/portrait-b64 public/images
+          git add -u scripts/portrait-b64 public/images || true
+          if git diff --staged --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Restore Amazon author portrait webp/jpg base64"
+            git push
+          fi
