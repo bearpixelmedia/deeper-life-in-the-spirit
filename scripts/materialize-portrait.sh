@@ -2,58 +2,52 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 mkdir -p "$ROOT/public/images"
+DIR="$ROOT/scripts/portrait-b64"
 
-WEBP_URL="${AUTHOR_PORTRAIT_WEBP_URL:-https://tmpfiles.org/dl/1793652699.9602bd0826779c06/wbASdXNJ23sV/author-portrait-real.webp}"
-OUT_WEBP="$ROOT/public/images/author-portrait.webp"
-B64="$ROOT/scripts/portrait-b64/author-portrait.webp.b64"
+assemble() {
+  local base="$1"
+  if compgen -G "$DIR/${base}.part*" > /dev/null; then
+    cat $(ls "$DIR/${base}.part"* | sort) > "$DIR/$base"
+    echo "assembled $base ($(wc -c < "$DIR/$base") bytes) from parts"
+  fi
+}
 
-if compgen -G "${B64}.part*" > /dev/null; then
-  cat $(ls "${B64}.part"* | sort) > "$B64"
+assemble author-portrait.webp.b64
+assemble author-portrait.jpg.b64
+assemble author-portrait-320.jpg.b64
+
+decode_b64() {
+  local name="$1"
+  local b64="$DIR/${name}.b64"
+  local out="$ROOT/public/images/$name"
+  if [[ -f "$b64" ]] && [[ $(wc -c < "$b64") -gt 1000 ]]; then
+    base64 -d "$b64" > "$out"
+    echo "wrote $out ($(wc -c < "$out") bytes) from sidecar"
+    return 0
+  fi
+  echo "missing/incomplete sidecar for $name" >&2
+  return 1
+}
+
+decode_b64 author-portrait.webp
+decode_b64 author-portrait.jpg
+decode_b64 author-portrait-320.jpg
+
+# Validate Amazon navy portrait sizes (504x504 ~20KB webp / ~37KB jpg)
+WEBP_BYTES=$(wc -c < "$ROOT/public/images/author-portrait.webp")
+JPG_BYTES=$(wc -c < "$ROOT/public/images/author-portrait.jpg")
+echo "sizes webp=$WEBP_BYTES jpg=$JPG_BYTES"
+if [[ "$WEBP_BYTES" -lt 15000 ]] || [[ "$WEBP_BYTES" -gt 30000 ]]; then
+  echo "Unexpected webp size $WEBP_BYTES (expected ~20180 Amazon portrait)" >&2
+  exit 1
 fi
-
-used_download=0
-if [[ -f "$B64" ]] && [[ $(wc -c < "$B64") -gt 1000 ]]; then
-  base64 -d "$B64" > "$OUT_WEBP" || true
-fi
-BYTES=$(wc -c < "$OUT_WEBP" 2>/dev/null || echo 0)
-if [[ "$BYTES" -lt 140000 ]] || [[ "$BYTES" -gt 150000 ]]; then
-  echo "Sidecar incomplete/missing (got ${BYTES:-0}); downloading $WEBP_URL"
-  curl -fsSL -o "$OUT_WEBP" "$WEBP_URL"
-  used_download=1
-fi
-
-BYTES=$(wc -c < "$OUT_WEBP")
-echo "wrote public/images/author-portrait.webp ($BYTES bytes) (download=$used_download)"
-if [[ "$BYTES" -lt 140000 ]] || [[ "$BYTES" -gt 150000 ]]; then
-  echo "Unexpected webp size $BYTES (expected ~145064)" >&2
+if [[ "$JPG_BYTES" -lt 30000 ]] || [[ "$JPG_BYTES" -gt 50000 ]]; then
+  echo "Unexpected jpg size $JPG_BYTES (expected ~37841 Amazon portrait)" >&2
   exit 1
 fi
 
-cp "$OUT_WEBP" "$ROOT/public/images/author-portrait-hires.webp"
-echo "wrote public/images/author-portrait-hires.webp ($(wc -c < "$ROOT/public/images/author-portrait-hires.webp") bytes)"
-
-decode_or_convert() {
-  local name="$1"
-  local resize="$2"
-  local quality="$3"
-  local b64="$ROOT/scripts/portrait-b64/${name}.b64"
-  if compgen -G "${b64}.part*" > /dev/null; then
-    cat $(ls "${b64}.part"* | sort) > "$b64"
-  fi
-  if [[ -f "$b64" ]] && [[ $(wc -c < "$b64") -gt 1000 ]]; then
-    if base64 -d "$b64" > "$ROOT/public/images/$name" 2>/dev/null; then
-      echo "wrote public/images/$name ($(wc -c < "$ROOT/public/images/$name") bytes) from sidecar"
-      return
-    fi
-  fi
-  if [[ -n "$resize" ]]; then
-    magick "$OUT_WEBP" -resize "$resize" -quality "$quality" "$ROOT/public/images/$name"
-  else
-    magick "$OUT_WEBP" -quality "$quality" "$ROOT/public/images/$name"
-  fi
-  echo "wrote public/images/$name ($(wc -c < "$ROOT/public/images/$name") bytes) via ImageMagick"
-}
-
-decode_or_convert author-portrait.jpg "" 90
-decode_or_convert author-portrait-1200.jpg "1200x1200" 88
-decode_or_convert author-portrait-640.jpg "640x640" 85
+# Keep legacy aliases pointing at the same Amazon assets when present in tree
+cp "$ROOT/public/images/author-portrait.webp" "$ROOT/public/images/author-portrait-hires.webp"
+cp "$ROOT/public/images/author-portrait.jpg" "$ROOT/public/images/author-portrait-640.jpg"
+cp "$ROOT/public/images/author-portrait.jpg" "$ROOT/public/images/author-portrait-1200.jpg"
+echo "synced legacy aliases to Amazon portrait"
