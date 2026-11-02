@@ -1,0 +1,58 @@
+:root {
+  --ink: #061312;
+  --valley: #0a2422;
+  --mist: #123836;
+  --canopy: #1c4f49;
+  --foam: #e7f3ef;
+  --foam-muted: #b7d0c8;
+  --dawn: #f0b44a;
+  --dawn-soft: #f6d28a;
+  --ember: #e0893a;
+  --ray: rgba(240, 180, 74, 0.18);
+  --glass: rgba(14, 48, 44, 0.55);
+  --font-brand: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Outfit", "Segoe UI", sans-serif;
+  color: var(--foam);
+  background: var(--ink);
+  font-family: var(--font-body);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--ink);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(240, 180, 74, 0.35);
+  color: var(--foam);
+}
