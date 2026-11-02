@@ -47,14 +47,16 @@ export default function App() {
       </div>
 
       <header className="site-header">
-        <a className="wordmark" href="#top">
-          Deeper Life in the Spirit
-        </a>
-        <AmazonButton className="cta--compact" label="Get the book" />
+        <div className="shell site-header-inner">
+          <a className="wordmark" href="#top">
+            Deeper Life in the Spirit
+          </a>
+          <AmazonButton className="cta--compact" label="Get the book" />
+        </div>
       </header>
 
       <main id="top">
-        <section className="hero" aria-labelledby="hero-title">
+        <section className="hero shell" aria-labelledby="hero-title">
           <div className="hero-copy">
             <motion.p
               className="hero-brand"
@@ -125,7 +127,7 @@ export default function App() {
 
         <motion.section
           id="about"
-          className="section about"
+          className="section about shell"
           aria-labelledby="about-heading"
           initial="hidden"
           whileInView="show"
@@ -142,7 +144,7 @@ export default function App() {
           </div>
         </motion.section>
 
-        <section className="section themes" aria-labelledby="themes-heading">
+        <section className="section themes shell" aria-labelledby="themes-heading">
           <motion.div
             initial="hidden"
             whileInView="show"
@@ -177,7 +179,7 @@ export default function App() {
 
         <motion.section
           id="author"
-          className="section author"
+          className="section author shell"
           aria-labelledby="author-heading"
           initial="hidden"
           whileInView="show"
@@ -204,7 +206,7 @@ export default function App() {
 
         <motion.section
           id="buy"
-          className="section buy"
+          className="section buy shell"
           aria-labelledby="buy-heading"
           initial="hidden"
           whileInView="show"
@@ -236,16 +238,18 @@ export default function App() {
       </main>
 
       <footer className="site-footer">
-        <p>
-          © {new Date().getFullYear()} {book.author}. {book.title}.
-        </p>
-        <p>
-          Cover and product details from the{" "}
-          <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer">
-            Amazon listing
-          </a>
-          .
-        </p>
+        <div className="shell site-footer-inner">
+          <p>
+            © {new Date().getFullYear()} {book.author}. {book.title}.
+          </p>
+          <p>
+            Cover and product details from the{" "}
+            <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer">
+              Amazon listing
+            </a>
+            .
+          </p>
+        </div>
       </footer>
     </div>
   );
