@@ -225,7 +225,7 @@ export default function App() {
             <picture>
               <source
                 type="image/webp"
-                srcSet={author.portraitWebpSrc}
+                srcSet={author.portraitWebpSrcSet ?? author.portraitWebpSrc}
                 sizes={author.portraitSizes}
               />
               <img
