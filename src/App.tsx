@@ -106,9 +106,11 @@ export default function App() {
               <motion.img
                 className="cover"
                 src={book.coverSrc}
-                alt={`Cover of ${book.title} by ${book.author}`}
+                alt={`Front cover of ${book.title} by ${book.author} — white dove over a sunlit valley`}
                 width={1000}
                 height={1499}
+                decoding="async"
+                fetchPriority="high"
                 animate={reduceMotion ? undefined : { y: [0, -10, 0] }}
                 transition={
                   reduceMotion
@@ -233,7 +235,7 @@ export default function App() {
                 src={author.portraitSrc}
                 srcSet={author.portraitSrcSet}
                 sizes={author.portraitSizes}
-                alt={`Portrait of ${author.name}`}
+                alt={`${author.name}, ${author.role} — author of ${book.title}`}
                 width={author.portraitWidth}
                 height={author.portraitHeight}
                 loading="lazy"
