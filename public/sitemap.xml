@@ -3,13 +3,11 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://danielmpage.com/</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-04T20:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://danielmpage.com/images/og-cover.jpg</image:loc>
-      <image:title>Deeper Life in the Spirit — front cover</image:title>
-      <image:caption>Paperback cover of Deeper Life in the Spirit by Dr. Daniel Page</image:caption>
     </image:image>
   </url>
 </urlset>

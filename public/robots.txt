@@ -47,7 +47,4 @@ Allow: /
 User-agent: PerplexityBot
 Allow: /
 
-# Preferred host for Yandex
-Host: https://danielmpage.com
-
 Sitemap: https://danielmpage.com/sitemap.xml
