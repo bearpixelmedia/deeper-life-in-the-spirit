@@ -15,7 +15,7 @@ export const book = {
   format: "Paperback",
   pages: 752,
   language: "English",
-  price: "$29.95",
+  price: "$24.95",
   // Amazon listing product images (MAIN + BACK).
   coverSrc: "https://m.media-amazon.com/images/I/71oaK84UvHL._SL1499_.jpg",
   coverBackSrc: "https://m.media-amazon.com/images/I/61ecuhyHimL._SL1500_.jpg",
