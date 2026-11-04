@@ -1,0 +1,32 @@
+# Deeper Life in the Spirit
+
+> Official book landing page for *Deeper Life in the Spirit* by Pastor Dr. Daniel Page — a 365-day Genesis-to-Revelation paperback for intimacy with God through His Word.
+
+Website: https://danielmpage.com/
+Canonical: https://danielmpage.com/
+Sitemap: https://danielmpage.com/sitemap.xml
+
+## Book
+
+- Title: Deeper Life in the Spirit
+- Subtitle: A Journey into Intimacy with God through His Word
+- Author: Dr. Daniel Page
+- Format: Paperback
+- Pages: 752
+- ISBN-13: 979-8982072603
+- ASIN: B0HP1MQR7B
+- Price: USD 24.95
+- Publisher: Leadership Ministries Inc
+- Published: 2026-10-23
+- Buy: https://www.amazon.com/Deeper-Life-Spirit-Journey-Intimacy/dp/B0HP1MQR7B
+
+## Author
+
+Dr. Daniel Page is Senior Pastor of Crestview Baptist Church in Canton, North Carolina — pastor, preacher, musician, and teacher.
+
+## Site sections
+
+- Home / buy: https://danielmpage.com/
+- About the book: https://danielmpage.com/#about
+- About the author: https://danielmpage.com/#author
+- Buy: https://danielmpage.com/#buy
