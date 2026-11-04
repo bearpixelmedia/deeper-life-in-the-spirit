@@ -1,6 +1,9 @@
 export const AMAZON_URL =
   "https://www.amazon.com/Deeper-Life-Spirit-Journey-Intimacy/dp/B0HP1MQR7B";
 
+/** Canonical production origin (apex). */
+export const SITE_URL = "https://danielmpage.com";
+
 export const book = {
   title: "Deeper Life in the Spirit",
   subtitle: "A Journey into Intimacy with God through His Word",
