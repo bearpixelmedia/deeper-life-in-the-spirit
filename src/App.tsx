@@ -324,6 +324,16 @@ export default function App() {
             © {new Date().getFullYear()} {book.author}. {book.title}.
           </p>
           <p>
+            Built with <span role="img" aria-label="love">♥</span> by{" "}
+            <a
+              href="https://www.bearpixelmedia.com/"
+              title="Website by Bear Pixel Media"
+            >
+              Bear Pixel Media
+            </a>
+            . v0.1.0
+          </p>
+          <p>
             Cover art, product photos, and listing details from the{" "}
             <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer">
               Amazon listing
